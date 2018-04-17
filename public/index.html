@@ -8,27 +8,32 @@
   <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
-  <form class="form" action="" method="post">
+  <form class="form" action="/create-post" method="post">
+
 
     <fieldset>
       <legend>Post</legend>
 
-    <textarea name="name"  placeholder="add your post here...">
+
+    <textarea name="post"  placeholder="add your post here...">
     </textarea>
     <label for=""></label>
-    <select class="userSelect" name="">
+    <select class="userSelect" name="users">
+
       <option value="1">MARWA</option>
       <option value="2">MOHAMMED</option>
       <option value="3">ISHAK</option>
       <option value="4">RAMY</option>
     </select>
 
-    <select class="postType" name="">
-      <option value="stop">Stop</option>
-      <option value="go">Go</option>
-      <option value="cont">Continue</option>
+    <select class="postType" name="postType">
+      <option value="STOP">Stop</option>
+      <option value="GO">Go</option>
+      <option value="CONT">Continue</option>
     </select>
-    <button type="button" name="button" id="postBtn">Post</button>
+
+    <button type="submit" name="button" id="postBtn">Post</button>
+
 
   </fieldset>
   </form>

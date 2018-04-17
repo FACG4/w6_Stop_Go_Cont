@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node ./src/server.js"
+
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/FACG4/w6_Stop_Go_Cont/issues"
   },
-  "homepage": "https://github.com/FACG4/w6_Stop_Go_Cont#readme"
+  "homepage": "https://github.com/FACG4/w6_Stop_Go_Cont#readme",
+  "dependencies": {
+    "env2": "^2.2.0",
+    "pg": "^7.4.1"
+  }
+
 }
