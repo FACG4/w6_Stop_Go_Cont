@@ -3,7 +3,7 @@ const fs = require('fs');
 const pg = require('pg');
 const handler = require('./handler');
 
-const type = ['/css/style.css','/js/dom.js','/img/favico.jpeg']
+const type = ['/css/style.css','/js/dom.js','/favicon.ico']
 
 const router = (request, response) => {
     const {url} = request
@@ -13,6 +13,8 @@ const router = (request, response) => {
       handler.sendDataToDB(request,response)
     }else if (url==="/getdata") {
       handler.getDBData(response)
+    }else if (url==="/favicon.ico") {
+      handler.serveFiles('/img/favico.jpeg', response);
     }else if (type.includes(url)) {
       handler.serveFiles(url, response);
     }else {
