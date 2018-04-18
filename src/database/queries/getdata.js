@@ -6,7 +6,7 @@ const sql = {
   FROM posts
   INNER JOIN users
   ON posts.user_id= users.id
-  ORDER BY type_of_note `
+  ORDER BY type_of_note DESC`
 }
   dbConnection.query(sql,(err,res)=>{
     if (err) {
