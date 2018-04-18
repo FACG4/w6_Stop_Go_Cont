@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Phone Guide</title>
   <link rel="stylesheet" href="../public/css/style.css">
+
 </head>
 <body>
   <form class="form" action="/create-post" method="post">
@@ -15,7 +16,7 @@
       <legend>Post</legend>
 
 
-    <textarea name="post"  placeholder="add your post here...">
+    <textarea name="post" id="inputId" placeholder="add your post here...">
     </textarea>
     <label for=""></label>
     <select class="userSelect" name="users">
@@ -39,21 +40,55 @@
   </form>
 
 
-  <div class="results">
-    <div class="stop resultDiv" id="stop">
+  <div class="results" id="results">
+    <div onclick="myFunction()" class="stop resultDiv hideme" id="stop" id="myDIV">
+      <button onclick="myFunction()">Try it</button>
+      <h2>stop</h2>
+      <ul>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+      </ul>
 
     </div>
-    <div class="go resultDiv" id="go">
-
+    <div class="go resultDiv hideme" id="go">
+      <h2>go</h2>
+      <ul>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+      </ul>
     </div>
-    <div class="cont resultDiv" id="cont">
-
+    <div class="cont resultDiv hideme" id="cont">
+      <h2>continue</h2>
+      <ul>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+        <li>dfsfdsfdsf</li>
+      </ul>
     </div>
 
 
   </div>
 
 <script type="text/javascript" src="../public/js/dom.js">
+</script>
+<script>
+function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
 
 </script>
 </body>
