@@ -19,7 +19,9 @@
   "homepage": "https://github.com/FACG4/w6_Stop_Go_Cont#readme",
   "dependencies": {
     "env2": "^2.2.0",
-    "pg": "^7.4.1",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
     "tap-spec": "^4.1.1",
     "tape": "^4.9.0"
   }
