@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/server.js",
-    "test": "NODE_ENV=test node src/database/tests/test.js||tap-spec"
+    "test": "NODE_ENV=test node src/database/tests/dbtest.js | tap-spec"
   },
   "repository": {
     "type": "git",

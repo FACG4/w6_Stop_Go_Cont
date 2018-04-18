@@ -62,7 +62,7 @@ const router = (request, response) => {
           });
 
     }
-else if (endpoint==="getdata" && request.method === "POST") {
+else if (endpoint==="getdata" ) {
   let allData='';
   request.on("data",chunck=>{
     allData+=chunck;
