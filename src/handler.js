@@ -7,10 +7,10 @@ const queryString = require('querystring');
 const contentType = {
   html:'text/html',
   css: 'text/css',
-  jpg: 'images/jpg',
-  jpeg: 'images/jpeg',
-  png: 'images/png',
-  ico: 'images/ico',
+  jpg: 'image/jpg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  ico: 'image/ico',
   js: 'text/javascript'
 }
 
