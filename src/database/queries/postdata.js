@@ -11,7 +11,7 @@ const postData = (userId, postContent, postType, cb ) =>{
 
     return  cb(err)
     }
-    
+
     cb(null,res)
   });
 };
