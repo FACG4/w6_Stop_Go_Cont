@@ -3,6 +3,7 @@ const fs = require('fs');
 const pg = require('pg');
 // const getData = require('./queries/getData.js');
 const postData = require('./database/queries/insert.js');
+const getData = require('./database/queries/getdata.js');
 const queryString = require('querystring');
 
 const router = (request, response) => {
@@ -42,7 +43,7 @@ const router = (request, response) => {
             data += chunk;
         });
         request.on('end', () => {
-            const postContent = queryString.parse(data).post;
+            const postContent = queryString.parse(data).post.trim();
             const userId = queryString.parse(data).users;
             const postType = queryString.parse(data).postType;
             postData(userId, postContent, postType, (err, res) => {
@@ -60,7 +61,30 @@ const router = (request, response) => {
             });
           });
 
-    } else {
+    }
+else if (endpoint==="getdata" && request.method === "POST") {
+  let allData='';
+  request.on("data",chunck=>{
+    allData+=chunck;
+  })
+  request.on("end",()=>{
+    let postType=allData // you have to know the data type comes from dom
+    getData((err,res)=>{
+      if (err) {
+        response.writeHead(500, 'Content-Type:text/html');
+        response.end('<h1>Sorry, there was a problem adding that user</h1>');
+
+      }
+      else {
+        response.writeHead(200, {"location": "/"});
+        response.end(JSON.stringify(res))
+        // console.log('done');
+      }
+    })
+  })
+
+}
+     else {
         const fileName = request.url;
         const fileType = request.url.split(".")[1];
         fs.readFile(__dirname + "/../public" + fileName, function(error, file) {
