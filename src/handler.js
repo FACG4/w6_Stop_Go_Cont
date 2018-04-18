@@ -47,7 +47,6 @@ const sendDataToDB = (request,response)=>{
         else {
           response.writeHead(302, {"location": "/"});
           response.end('Done')
-          console.log('done');
         }
       });
     });
@@ -59,10 +58,9 @@ const getDBData = (response)=>{
       if (err) {
         response.writeHead(500, 'Content-Type:text/html');
         response.end('<h1>Sorry, there was a problem adding that user</h1>');
-
       }
       else {
-        response.writeHead(302, {"location": "/"});
+        response.writeHead(200, 'Content-Type:application/json');
         response.end(JSON.stringify(result))
       }
     })
