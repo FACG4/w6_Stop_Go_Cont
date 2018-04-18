@@ -3,7 +3,7 @@ const fs = require('fs');
 const pg = require('pg');
 // const getData = require('./queries/getData.js');
 const postData = require('./database/queries/insert.js');
-const search = require('./database/queries/search.js');
+const getData = require('./database/queries/getdata.js');
 const queryString = require('querystring');
 
 const router = (request, response) => {
@@ -62,14 +62,14 @@ const router = (request, response) => {
           });
 
     }
-else if (endpoint==="search" && request.method === "POST") {
+else if (endpoint==="getdata" && request.method === "POST") {
   let allData='';
   request.on("data",chunck=>{
     allData+=chunck;
   })
   request.on("end",()=>{
     let postType=allData // you have to know the data type comes from dom
-    search((err,res)=>{
+    getData((err,res)=>{
       if (err) {
         response.writeHead(500, 'Content-Type:text/html');
         response.end('<h1>Sorry, there was a problem adding that user</h1>');
