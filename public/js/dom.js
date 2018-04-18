@@ -12,6 +12,9 @@ const fetch = (method, url, value, cb) => {
 }
 
 
+
+
+
 const selector=(text)=>{
   return document.querySelector(text)
 }
@@ -22,33 +25,139 @@ const selector=(text)=>{
 //   document.body.classList.toogle("hideme");
 // });
 
-const create = (element)=>{
-  document.createElement(element);
+const create = (element,parent,content)=>{
+
+let newElement= document.createElement(element);
+if(content){
+  newElement.textContent=content;
+}
+ if(parent){
+    return parent.appendChild(newElement);
+ }
+ else {
+   return newElement
+ }
+
+
 }
 
-const showData = (res) => {
-  let goDiv = selector("go");
-  let contDiv = selector("cont");
-  let stopDiv = selector("stop");
-res.forEach(item) =>{
-let user = res.user_name ;
-let postText = res.post_content ;
-let typeOfNote = res.type_of_note;
-if(typeOfNote == "go"){
-create("li");
-li.textContent = user ;
-create("li");
-li.textContent = postText;
-create("li");
-li.textContent = typeOfNote ;
-create("ul");
-ul.appendChild(li);
-let div = create("div");
-div.appendChild(ul);
-goDiv.appendChild(div)
-}
-}}
+let results =[
+  {
+    user_name: "MOHAMMED",
+    post_content: "GO GOG GO",
+    type_of_note: "GO"
+  },
+  {
+    user_name: "MOHAMMED",
+    post_content: "GO GOG GO",
+    type_of_note: "GO"
+  },
+  {
+    user_name: "MOHAMMED",
+    post_content: "GO GOG GO",
+    type_of_note: "STOP"
+  },{
+    user_name: "MOHAMMED",
+    post_content: "GO GOG GO",
+    type_of_note: "CONT"
+  },{
+    user_name: "MOHAMMED",
+    post_content: "GO GOG GO",
+    type_of_note: "STOP"
+  },
+];
 
-fetch("POST","/getdata",data,(res)=>{
-  showData(res)
+
+const showData = (results) => {
+
+  let childGo = create("div",selector("#go"),null);
+  let childCont = create("div",selector("#cont"),null);
+  let childStop = create("div",selector("#stop"),null);
+
+
+results.forEach(function(item){
+
+  let array =[item.user_name,item.post_content,item.type_of_note]
+
+// if(item.type_of_note == "GO"){
+  let ul = create("ul",create("div",selector("#"+item.type_of_note),null),null);
+  array.forEach(details=>{
+    let li = create("li",ul,details)
+    console.log(ul);
+
+  })
+// }
+//   if(item.type_of_note == "STOP"){
+//   let ul = create("ul",childStop,null);
+//   array.forEach(details=>{
+//     let li = create("li",ul,details)
+//
+//   })
+// }
+// if(item.type_of_note == "CONT"){
+//   let ul = create("ul",childCont,null);
+//   array.forEach(details=>{
+//     let li = create("li",ul,details)
+//
+//   })
+// }
 })
+}
+
+//
+// let li1 = create("li");
+// li1.textContent = user ;
+// let li2 = create("li");
+// li2.textContent = postText;
+// let li3 = create("li");
+// li3.textContent = typeOfNote ;
+// ul.appendChild(li1);
+// ul.appendChild(li2);
+// ul.appendChild(li3);
+// div.appendChild(ul);
+// goDiv.appendChild(div)
+// // console.log(div);
+// }
+//
+// if(typeOfNote == "CONT"){
+// let li1 = create("li");
+// li1.textContent = user ;
+// let li2 = create("li");
+// li2.textContent = postText;
+// let li3 = create("li");
+// li3.textContent = typeOfNote ;
+// let ul = create("ul");
+// ul.appendChild(li1);
+// ul.appendChild(li2);
+// ul.appendChild(li3);
+// let div = create("div");
+// div.appendChild(ul);
+// contDiv.appendChild(div)
+// // console.log(div);
+// }
+//
+// if(typeOfNote == "STOP"){
+// let li1 = create("li");
+// li1.textContent = user ;
+// let li2 = create("li");
+// li2.textContent = postText;
+// let li3 = create("li");
+// li3.textContent = typeOfNote ;
+// let ul = create("ul");
+// ul.appendChild(li1);
+// ul.appendChild(li2);
+// ul.appendChild(li3);
+// let div = create("div");
+// div.appendChild(ul);
+// stopDiv.appendChild(div)
+// // console.log(div);
+// }
+// });
+//
+// }
+showData(results);
+
+
+
+// fetch("POST","/getdata",NULL,(res)=>{
+// })
