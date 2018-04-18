@@ -13,8 +13,6 @@ const router = (request, response) => {
       handler.sendDataToDB(request,response)
     }else if (url==="/getdata") {
       handler.getDBData(response)
-    }else if (url==="/favicon.ico") {
-      handler.serveFiles('/img/favico.jpeg', response);
     }else if (type.includes(url)) {
       handler.serveFiles(url, response);
     }else {
