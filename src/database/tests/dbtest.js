@@ -3,13 +3,6 @@ const getData = require('../queries/getdata');
 const runDbBuild = require('../db_build');
 const test = require('tape');
 
-// test("tape is working", t => {
-//   t.equals(1, 1, "one equals one");
-//   t.end();
-// });
-
-
-//this is tests for insert query function
 test("test for getting data",t=>{
 runDbBuild((err,res)=>{
   let expected = [
