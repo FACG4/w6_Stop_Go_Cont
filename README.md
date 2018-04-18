@@ -1,5 +1,5 @@
 # week6_StopGoContinue
-[![Build Status](https://travis-ci.org/FACG4/Week5-CoinMarket.svg?branch=master)](https://travis-ci.org/FACG4/Week5-CoinMarket)
+[![Build Status](https://travis-ci.org/FACG4/w6_Stop_Go_Cont.svg?branch=master)](https://travis-ci.org/FACG4/w6_Stop_Go_Cont)
 
 ![S-T-C](https://image.freepik.com/vetores-gratis/desenho-de-semaforo-desenhado-mao_23-2147633184.jpg)
 
