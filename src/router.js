@@ -2,12 +2,14 @@ const http = require('http');
 const fs = require('fs');
 const pg = require('pg');
 // const getData = require('./queries/getData.js');
-const postData = require('./database/queries/insert.js');
+const postData = require('./database/queries/postdata.js');
 const getData = require('./database/queries/getdata.js');
 const queryString = require('querystring');
 
 const router = (request, response) => {
     const endpoint = request.url.split('/')[1];
+    console.log(endpoint);
+    console.log(request.url);
 
     if (endpoint === '') {
         fs.readFile(__dirname + "/../public/index.html", function(error, file) {
