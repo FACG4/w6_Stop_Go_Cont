@@ -50,7 +50,7 @@ const showData = (results) => {
 
   results.forEach(function(item) {
 
-    let array = [item.user_name, item.post_content, item.type_of_note]
+    let array = [item.user_name, item.post_content]
 
     let ul = create("ul", create("div", selector("#" + item.type_of_note), null), null);
     array.forEach(details => {
@@ -63,5 +63,6 @@ const showData = (results) => {
 
 
 fetch("POST", "/getdata", (res) => {
+  console.log(res);
   showData(res);
 })
