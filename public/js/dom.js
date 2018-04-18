@@ -11,25 +11,18 @@ const fetch = (method, url, cb) => {
   xhr.send()
 }
 
-
-
-
-
 const selector = (text) => {
   return document.querySelector(text)
 }
 
-// const divv = document.selectElementById("#stop");
-//
-// divv.addEventListener("click",function(){
-//   document.body.classList.toogle("hideme");
-// });
-
-const create = (element, parent, content) => {
+const create = (element, parent, content,classes) => {
 
   let newElement = document.createElement(element);
   if (content) {
     newElement.textContent = content;
+  }
+  if (classes) {
+    newElement.setAttribute("class", classes)
   }
   if (parent) {
     return parent.appendChild(newElement);
@@ -52,17 +45,17 @@ const showData = (results) => {
 
     let array = [item.user_name, item.post_content]
 
-    let ul = create("ul", create("div", selector("#" + item.type_of_note), null), null);
-    array.forEach(details => {
-      let li = create("li", ul, details)
-      console.log(ul);
-
-    })
+    let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
+    create("li", ul,item.user_name,"user")
+    create("li", ul ,item.post_content,"text")
+    // array.forEach(details => {
+    //   let li = create("li", ul, details,"details")
+    //
+    // })
   })
 }
 
 
 fetch("POST", "/getdata", (res) => {
-  console.log(res);
   showData(res);
 })
