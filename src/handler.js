@@ -39,6 +39,7 @@ const sendDataToDB = (request,response)=>{
       const postContent = queryString.parse(data).post.trim();
       const userId = queryString.parse(data).users;
       const postType = queryString.parse(data).postType;
+      if(postContent.length >0){
       postData(userId, postContent, postType, (err, res) => {
           if (err) {
               response.writeHead(500, 'Content-Type:text/html');
@@ -49,6 +50,11 @@ const sendDataToDB = (request,response)=>{
           response.end('Done')
         }
       });
+    }else{
+      response.writeHead(500, 'Content-Type:text/html');
+      response.end('<h1>Sorry, Enter some content</h1>');
+
+    }
     });
 }
 
