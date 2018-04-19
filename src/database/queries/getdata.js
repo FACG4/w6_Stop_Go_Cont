@@ -9,10 +9,7 @@ const sql = {
   ORDER BY type_of_note DESC`
 }
   dbConnection.query(sql,(err,res)=>{
-    if (err) {
-      throw new Error(err)
-    }
-    console.log(res.rows);
+    if (err) return cb(err)
     return cb(null,res.rows)
   });
 

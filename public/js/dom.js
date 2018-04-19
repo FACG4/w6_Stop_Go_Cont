@@ -4,7 +4,6 @@ const fetch = (method, url, cb) => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       let response = JSON.parse(xhr.responseText)
       cb(response)
-
     }
   };
   xhr.open(method, url)
@@ -16,45 +15,20 @@ const selector = (text) => {
 }
 
 const create = (element, parent, content,classes) => {
-
   let newElement = document.createElement(element);
-  if (content) {
-    newElement.textContent = content;
-  }
-  if (classes) {
-    newElement.setAttribute("class", classes)
-  }
-  if (parent) {
-    return parent.appendChild(newElement);
-  } else {
-    return newElement
-  }
-
-
+  if (content)  newElement.textContent = content;
+  if (classes)  newElement.setAttribute("class", classes)
+  if (parent) return parent.appendChild(newElement);
+  else  return newElement
 }
 
-
 const showData = (results) => {
-
-  let childGo = create("div", selector("#go"), null);
-  let childCont = create("div", selector("#cont"), null);
-  let childStop = create("div", selector("#stop"), null);
-
-
   results.forEach(function(item) {
-
-    let array = [item.user_name, item.post_content]
-
     let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
     create("li", ul,item.user_name,"user")
     create("li", ul ,item.post_content,"text")
-    // array.forEach(details => {
-    //   let li = create("li", ul, details,"details")
-    //
-    // })
   })
 }
-
 
 fetch("POST", "/getdata", (res) => {
   showData(res);
