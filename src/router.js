@@ -11,6 +11,8 @@ const router = (request, response) => {
       handler.serveFiles('/index.html', response);
     }else if (url === "/create-post" && request.method === 'POST') {
       handler.sendDataToDB(request,response)
+    }else if (url==="/login") {
+      handler.serveFiles('/login.html', response);
     }else if (url==="/getdata") {
       handler.getDBData(response)
     }else if (type.includes(url)) {
