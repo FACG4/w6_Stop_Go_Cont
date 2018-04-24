@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Register</title>
+</head>
+
+<body>
+  <section class="signup">
+    <h1>Sign up</h1>
+
+    <form class="signup__form" id="signup__form" >
+      <label for="userName">User Name:
+        <input id="userName" type="text" required/>
+      </label>
+      <label for="email">Email:
+        <input id="email" type="email" required/>
+      </label>
+      <label for="password">Password:
+        <input id="password" type="password" required />
+      </label>
+      <label for="confirmPassword">Confirm password:
+        <input id="confirmPassword" type="password" required/>
+      </label>
+      <p id="message" class="errorMsg"></p>
+      <button>Submit</button>
+    </form>
+  </section>
+  <script src="./js/dom.js" type="text/javascript"></script>
+</body>
+
+</html>
