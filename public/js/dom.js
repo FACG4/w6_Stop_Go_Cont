@@ -34,9 +34,62 @@ fetch("POST", "/getdata", (res) => {
   showData(res);
 })
 
+<<<<<<< HEAD
+// adding form validation
+var form = document.getElementById('signup__form')
+if (form) {
+  var message=document.getElementById('message')
+  message.style.display='none'
+
+
+form.addEventListener('submit',function(event){
+  event.preventDefault()
+  var userName=document.getElementById('userName').value
+  var email = document.getElementById('email').value
+  var password = document.getElementById('password').value
+  var cPassword = document.getElementById('confirmPassword').value
+  message.style.display='block'
+  if (!userName || userName.length<2 || userName.length>30) {
+    message.textContent='PLEASE ENTER AN User Name with (3-20 characters)'
+  }
+  else if (!email) {
+    message.textContent='PLEASE ENTER AN EMAIL ADDRESS'
+  }
+  else if (!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}/)) {
+    message.textContent='PLEASE ENTER A VALIDE EMAIL ADDRESS'
+  }
+  else if (password.length<8) {
+    message.textContent='Password must be at least 8 characters long.'
+  }
+  else if (!password.match(/^(?=.*[a-z]).+$/)) {
+    message.textContent='Password must contain a lowercase letter.'
+  }
+  else if (!password.match(/^(?=.*[A-Z]).+$/)) {
+    message.textContent='Password montain an uppercase letter.'
+  }
+  else if (!password.match(/^(?=.*[0-9_\W]).+$/)) {
+    message.textContent='Password must contain a number or special character.'
+  }
+  else if (password!=cPassword) {
+    message.textContent='Password YOU ENTERED DO NOT MATCH'
+  }
+  else{
+    message.style.display='none'
+    fetch("POST","signup",(response)=>{
+      if (response) {
+        message.style.display='block'
+        message.textContent=response
+        
+      }
+    })
+  }
+})
+}
+=======
 
 ////ishak login /////////////////
 // 
 // fetch("POST", "/login", (res) => {
 //
 // })
+>>>>>>> ef2c5bf99a2cff7928ddf5bf49bab2906db20921
