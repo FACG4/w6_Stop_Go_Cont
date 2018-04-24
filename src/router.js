@@ -17,6 +17,8 @@ const router = (request, response) => {
       handler.getUserDataFromDB(request,response)
     }else if (url==="/getdata") {
       handler.getDBData(response)
+    }else if (url==="/signup") {
+      handler.signUp(request,response)
     }else if (type.includes(url)) {
       handler.serveFiles(url, response);
     }else {
