@@ -1,68 +1,156 @@
+/* body{
+  background-color: red;
+} */
+
+.hideme {}
 
 #myDIV {
-    width: 100%;
-    padding: 50px 0;
-    text-align: center;
-    background-color: lightblue;
-    margin-top: 20px;
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  background-color: lightblue;
+  margin-top: 20px;
 }
-#STOP{
+
+#STOP {
   background-color: #fa958e
 }
-#GO{
+login
+#GO {
   background-color: #95E895;
 }
-#CONT{
+
+#CONT {
   background-color: #fafa78;
 }
-ul{
+
+ul {
   list-style-type: none;
 }
-.notes{
 
+.notes {
   border: 1px #272727 dashed;
   margin-bottom: 15px;
 }
-.user{
+
+.user {
   font-size: 15px;
   font-weight: 600;
 }
-.text{
+
+.text {
   font-size: 15px;
   padding: 10px;
   margin-left: 15px;
   font-weight: 600;
 }
-body{
-background-color: #E8E3CA;
+
+body {
+  background-image: linear-gradient(to right bottom, rgb(80, 163, 162) 0%, rgb(83, 227, 166) 100%);
+  background-color: #E8E3CA;
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
-.form{
+
+.form {
   align-self: center;
   display: flex;
-text-align: center;
-border-radius: 20px;
+  text-align: center;
+  border-radius: 20px;
 }
-textarea{
+
+textarea {
   width: 100%;
   height: 100px;
   text-align: center;
 }
-legend{
 
+legend {
   font-size: 30px;
 }
-h1{
+
+h1 {
   text-align: center;
   font-size: 40px;
   color: #000;
- text-shadow: 2px 2px #0ff;
+  text-shadow: 2px 2px #0ff;
 }
-select , button{
+
+select, button {
   height: 30px;
   font-size: 20px;
   border-radius: 8px;
   margin-right: 20px;
+}
+
+.colors {
+  background-image: linear-gradient(to right bottom, rgb(80, 163, 162) 0%, rgb(83, 227, 166) 100%);
+}
+
+* {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  box-sizing: border-box;
+}
+
+.login {
+  width: 500px;
+  height: 600px;
+  margin: 1em auto;
+  padding: 1em 1em 0;
+  background: rgb(243, 243, 243);
+  border-radius: 5px;
+}
+
+.login h1 {
+  width: 70%;
+  margin: 1.5em auto;
+  display: block;
+}
+
+.login__form {
+  font-size: 24px;
+}
+
+.login__form label {
+  width: 70%;
+  display: block;
+  margin: 1em auto 0.5em;
+}
+
+.login__form input {
+  width: 100%;
+  height: 30px;
+  display: block;
+  margin: 1em auto 0;
+  padding: 0.5em;
+  outline: none;
+  border: 1px solid rgba(3, 3, 3, 0.99);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.login__form button {
+  width: 70%;
+  height: 30px;
+  display: block;
+  margin: 2em auto;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(36, 36, 36);
+  font-size: 10px;
+  color: white;
+  text-transform: uppercase;
+  font-size: 23px;
+}
+
+.error {
+  width: 70%;
+  min-height: 1.5em;
+  margin: 0.2em auto 0.5em;
+  font-size: 10px;
+  color: red;
+  text-transform: uppercase;
 }

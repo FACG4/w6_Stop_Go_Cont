@@ -33,3 +33,10 @@ const showData = (results) => {
 fetch("POST", "/getdata", (res) => {
   showData(res);
 })
+
+
+////ishak login /////////////////
+// 
+// fetch("POST", "/login", (res) => {
+//
+// })
