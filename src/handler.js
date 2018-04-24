@@ -5,6 +5,8 @@ const postData = require('./database/queries/postdata.js');
 const getData = require('./database/queries/getdata.js');
 const queryString = require('querystring');
 const check = require('check');
+const getUserData = require('./database/queries/check')
+
 const contentType = {
   html:'text/html',
   css: 'text/css',
@@ -72,7 +74,6 @@ const getDBData = (response)=>{
       }
     })
 }
-
 
 const signUp =(request,response)=>{
   let userInfo = '' ;
@@ -153,9 +154,45 @@ const signUp =(request,response)=>{
 }
 
 
+const getUserDataFromDB = (request,response)=>{
+  let data = '';
+  request.on('data', function(chunk) {
+      data += chunk;
+  });
+  request.on('end', () => {
+    console.log(data);
+      const email = queryString.parse(data).email.trim();
+      const password = queryString.parse(data).password;
+      console.log(email,password);
+      if(email.length >0&&password.length>0){
+      getUserData(email,password, (err, res) => {
+        
+          if (res.length ===0) {
+              response.writeHead(500, 'Content-Type:text/html');
+              response.end('<h1>Sorry, user not found</h1>');
+          }
+        else {
+          console.log(res);
+          response.writeHead(302, {"location": "/"});
+          response.end('Done')
+        }
+      });
+    }else{
+      response.writeHead(500, 'Content-Type:text/html');
+      response.end('<h1>Sorry, Enter some content</h1>');
+
+    }
+    });
+}
+
+
 module.exports={
   serveFiles,
   sendDataToDB,
   getDBData,
-  signUp
+
+  signUp,
+
+  getUserDataFromDB
+
 }
