@@ -36,7 +36,7 @@ fetch("POST", "/getdata", (res) => {
 
 
 ////ishak login /////////////////
-
-fetch("POST", "/login", (res) => {
-
-})
+// 
+// fetch("POST", "/login", (res) => {
+//
+// })
