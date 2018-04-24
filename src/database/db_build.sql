@@ -2,7 +2,7 @@ BEGIN;
 DROP TABLE IF EXISTS users, posts, comments CASCADE;
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY NOT NULL ,
+  id SERIAL PRIMARY KEY ,
   user_name VARCHAR UNIQUE NOT NULL ,
   password VARCHAR NOT NULL CHECK (length(password)>=6) ,
   role VARCHAR DEFAULT 'student',
@@ -10,14 +10,14 @@ CREATE TABLE users (
 );
 
 CREATE TABLE posts (
-  id SERIAL PRIMARY KEY NOT NULL ,
+  id SERIAL PRIMARY KEY,
   user_id  INTEGER REFERENCES users(id) ON UPDATE CASCADE,
-  post_content TEXT NOT NULL ,
+  post_content TEXT NOT NULL CHECK (length(post_content)>0),
   type_of_note  VARCHAR(10) NOT NULL CHECK (type_of_note IN ('STOP', 'GO', 'CONT'))
 );
 
 CREATE TABLE comments (
-  id SERIAL PRIMARY KEY NOT NULL ,
+  id SERIAL PRIMARY KEY,
   post_id INTEGER REFERENCES posts(id) ON UPDATE CASCADE,
   user_id INTEGER REFERENCES users(id) ON UPDATE CASCADE,
   comment_content TEXT NOT NULL

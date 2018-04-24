@@ -1,42 +1,36 @@
+
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Phone Guide</title>
-
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <title>Client Side Validation Challenge</title>
 </head>
-<body>
 
-<h2 class="h2s">Login Form</h2>
+<body class="colors">
+  <section class="login">
+    <h1>Login</h1>
 
-<form action="/action_page.php">
-  <div class="imgcontainer">
-    <img src="img_avatar2.png" alt="Avatar" class="avatar">
-  </div>
+    <form class="login__form" novalidate>
+      <label for="email">Email:
+        <input id="email" type="email" required/>
+      </label>
+      <p id="emailErr" class="error"></p>
+      <label for="password">Password:
+        <input id="password" type="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" />
+      </label>
+      <p id="passwordErr" class="error"></p>
+      <button>Submit</button>
+      <p id="passwordErr" class="error"></p>
+    </form>
+  </section>
+  <script type="text/javascript" src="./js/index.js">
 
-  <div class="container boo">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
-
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
-
-    <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
-    <div class="container">
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
-  </div>
-
-
-</form>
-<script type="text/javascript" src="./js/dom.js">
-
-</script>
+  </script>
 </body>
+
 </html>
