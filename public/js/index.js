@@ -17,12 +17,7 @@ var checkEmail = function() {
 };
 
 var checkPw = function() {
-  if (password.validity.patternMismatch) {
-    displayErr(
-      passwordErr,
-      "Password must contain at least eight characters, including one letter and one number"
-    );
-  } else if (password.validity.valueMissing) {
+  if (password.validity.valueMissing) {
     displayErr(passwordErr, "Please enter a password");
   } else {
     displayErr(passwordErr, "");
@@ -40,6 +35,7 @@ password.addEventListener("focusout", checkPw);
 
 
 form.addEventListener("submit", function(event) {
+
   if (!checkEmail()) {
     event.preventDefault();
   }
