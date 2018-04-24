@@ -3,7 +3,7 @@ const fs = require('fs');
 const pg = require('pg');
 const handler = require('./handler');
 
-const type = ['/css/style.css','/js/dom.js','/favicon.ico']
+const type = ['/css/style.css','/js/dom.js','/favicon.ico','/js/index.js']
 
 const router = (request, response) => {
     const {url} = request
@@ -13,8 +13,12 @@ const router = (request, response) => {
       handler.sendDataToDB(request,response)
     }else if (url==="/login") {
       handler.serveFiles('/login.html', response);
+    }else if (url==="/checkUser"&& request.method === 'POST') {
+      handler.getUserDataFromDB(request,response)
     }else if (url==="/getdata") {
       handler.getDBData(response)
+    }else if (url==="/signup") {
+      handler.signUp(request,response)
     }else if (type.includes(url)) {
       handler.serveFiles(url, response);
     }else {

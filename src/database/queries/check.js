@@ -1,17 +1,18 @@
 const dbConnection = require('../db_connection');
-const check=(column,value,cb)=>{
-  const sql={
-    text:`SELECT * FROM users WHERE $1 = $2`
-    values:[column,value]
-  }
-  db_connection.query(sql,(err,result)=>{
-    if (err) {
-        return cb(err)
-    }
-    if (result.rows.length>0) {
-        return cb(null,false)
-    }
-    return cb(null,true)
-  })
+
+const getUserData = (email,password,cb)=>{
+  console.log('jjjjjjj');
+const sql = {
+  text: 'SELECT name,id,role FROM users WHERE email = $1 AND password = $2',
+  values:[email,password]
 }
-module.exports =check ;
+  dbConnection.query(sql,(err,res)=>{
+    if (err) return cb(err)
+
+    return cb(null,res.rows)
+  });
+
+
+
+}
+module.exports=getUserData;

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/FACG4/w6_Stop_Go_Cont#readme",
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "env2": "^2.2.0",
     "pg": "^7.4.1"
   },
