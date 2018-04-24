@@ -11,15 +11,15 @@
   <section class="signup">
     <h1>Sign up</h1>
 
-    <form class="signup__form" id="signup__form" >
+    <form class="signup__form" id="signup__form"  action="/adduser" method="POST">
       <label for="userName">User Name:
-        <input id="userName" type="text" required/>
+        <input id="userName" type="text" name="username"required/>
       </label>
       <label for="email">Email:
-        <input id="email" type="email" required/>
+        <input id="email" type="email" name="email"required/>
       </label>
       <label for="password">Password:
-        <input id="password" type="password" required />
+        <input id="password" type="password" name="password" required />
       </label>
       <label for="confirmPassword">Confirm password:
         <input id="confirmPassword" type="password" required/>

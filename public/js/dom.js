@@ -1,4 +1,4 @@
-const fetch = (method, url, cb) => {
+const fetch = (method, url,value, cb) => {
   let xhr = new XMLHttpRequest();
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -7,7 +7,7 @@ const fetch = (method, url, cb) => {
     }
   };
   xhr.open(method, url)
-  xhr.send()
+  xhr.send(JSON.stringify(value))
 }
 
 const selector = (text) => {
@@ -29,10 +29,15 @@ const showData = (results) => {
     create("li", ul ,item.post_content,"text")
   })
 }
+var array={
+  username:'ahmed',
+  user_password:'123456789',
+  email:'ramy@ramy.com'
 
-fetch("POST", "/getdata", (res) => {
-  showData(res);
-})
+}
+// fetch("POST", "/signup", array,(res) => {
+//   // showData(res);
+// })
 
 // adding form validation
 var form = document.getElementById('signup__form')
@@ -42,7 +47,7 @@ if (form) {
 
 
 form.addEventListener('submit',function(event){
-  event.preventDefault()
+  // event.preventDefault()
   var userName=document.getElementById('userName').value
   var email = document.getElementById('email').value
   var password = document.getElementById('password').value
@@ -73,14 +78,14 @@ form.addEventListener('submit',function(event){
     message.textContent='Password YOU ENTERED DO NOT MATCH'
   }
   else{
-    message.style.display='none'
-    fetch("POST","signup",(response)=>{
-      if (response) {
-        message.style.display='block'
-        message.textContent=response
-
-      }
-    })
+    // message.style.display='none'
+    // fetch("POST","signup",(response)=>{
+    //   if (response) {
+    //     message.style.display='block'
+    //     message.textContent=response
+    //
+    //   }
+    // })
   }
 })
 }
