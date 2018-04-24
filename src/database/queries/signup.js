@@ -7,7 +7,7 @@ let sql = {
 }
 dbConnection.query(sql,(err,result)=>{
   if (err) {
-    console.log('errrrr');
+    console.log(err);
     cb(err)
   }
   else {
@@ -15,7 +15,6 @@ dbConnection.query(sql,(err,result)=>{
     cb(null,result)
   }
 })
-
   console.log("hi");
 }
 module.exports = fun;

@@ -1,14 +1,3 @@
-const fetch = (method, url,value, cb) => {
-  let xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      let response = JSON.parse(xhr.responseText)
-      cb(response)
-    }
-  };
-  xhr.open(method, url)
-  xhr.send(JSON.stringify(value))
-}
 
 const selector = (text) => {
   return document.querySelector(text)
@@ -23,21 +12,24 @@ const create = (element, parent, content,classes) => {
 }
 
 const showData = (results) => {
-  results.forEach(function(item) {
+  JSON.parse(results).forEach(function(item) {
     let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
     create("li", ul,item.user_name,"user")
     create("li", ul ,item.post_content,"text")
   })
 }
-var array={
-  username:'ahmed',
-  user_password:'123456789',
-  email:'ramy@ramy.com'
+// var array={
+//   username:'ahmed',
+//   user_password:'123456789',
+//   email:'ramy@ramy.com'
+//
+// }
+fetch("/getdata",{
+  method:'POST'
+})
+.then(response=>( response.text()))
+.then(data=>showData(data))
 
-}
-// fetch("POST", "/signup", array,(res) => {
-//   // showData(res);
-// })
 
 // adding form validation
 var form = document.getElementById('signup__form')

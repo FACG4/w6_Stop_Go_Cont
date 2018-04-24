@@ -81,29 +81,27 @@ const signUp =(request,response)=>{
     userInfo += chunk
   });
   request.on('end',()=>{
-    console.log(userInfo);
-    // userInfo=JSON.parse(userInfo)
+    const name = queryString.parse(userInfo).name ;
     const username = queryString.parse(userInfo).username ;
-    const user_password = queryString.parse(userInfo).password;
+    const password = queryString.parse(userInfo).password;
     const email = queryString.parse(userInfo).email;
-    console.log(username);
-    console.log(typeof queryString.parse(userInfo));
     if(username.length<3 || username.length>30){
       console.log(2);
       response.end('length of username must be from 3 to 8');
     }else if(username ===''){
       console.log(1);
       response.end('you must enter your name');
-    }else if(user_password.length<8){
+    }else if(password.length<8){
       console.log(3);
     response.end('password should not be less than 8')
   }else{
-    console.log('hi');
+    console.log('ِAll Is Ok');
     check('user_name' ,username,(err,result)=>{
       if(err){
         response.end('Sorry,user name has benn token');
       }
       else{
+        console.log('user check is ok');
         // console.log(result);
         // response.end('result')
         check('email' ,email,(err,result)=>{
@@ -113,14 +111,15 @@ const signUp =(request,response)=>{
           else{
             // console.log(result);
             // response.end(result)
-            hashPassword(user_password,(err,res)=>{
+            console.log('email check is ok');
+
+            hashPassword(password,(err,res)=>{
               if (err) {
-              return  console.log(err);
+              return  console.log("err");
               }
-              let name='google'
-              signupToDb('name','user_name','password','email',(err,result)=>{
+              signupToDb(name,username,password,email,(err,result)=>{
                 if (err) {
-                    throw new Error(err)
+                    return (err)
                 }
                 else {
                   response.writeHead(302, {'location':'/'});
@@ -167,7 +166,6 @@ const getUserDataFromDB = (request,response)=>{
     }else{
       response.writeHead(500, 'Content-Type:text/html');
       response.end('<h1>Sorry, Enter some content</h1>');
-
     }
     });
 }
@@ -177,9 +175,6 @@ module.exports={
   serveFiles,
   sendDataToDB,
   getDBData,
-
   signUp,
-
   getUserDataFromDB
-
 }
