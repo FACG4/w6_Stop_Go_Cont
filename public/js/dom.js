@@ -34,7 +34,6 @@ fetch("POST", "/getdata", (res) => {
   showData(res);
 })
 
-<<<<<<< HEAD
 // adding form validation
 var form = document.getElementById('signup__form')
 if (form) {
@@ -79,17 +78,9 @@ form.addEventListener('submit',function(event){
       if (response) {
         message.style.display='block'
         message.textContent=response
-        
+
       }
     })
   }
 })
 }
-=======
-
-////ishak login /////////////////
-// 
-// fetch("POST", "/login", (res) => {
-//
-// })
->>>>>>> ef2c5bf99a2cff7928ddf5bf49bab2906db20921
