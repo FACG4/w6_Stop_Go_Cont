@@ -1,10 +1,10 @@
 const dbConnection = require('../db_connection');
 const check=(column,value,cb)=>{
   const sql={
-    text:`SELECT * FROM users WHERE $1 = $2`
+    text:`SELECT * FROM users WHERE $1 = $2`,
     values:[column,value]
   }
-  db_connection.query(sql,(err,result)=>{
+  dbConnection.query(sql,(err,result)=>{
     if (err) {
         return cb(err)
     }

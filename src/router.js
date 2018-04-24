@@ -13,11 +13,13 @@ const router = (request, response) => {
       handler.sendDataToDB(request,response)
     }else if (url==="/login") {
       handler.serveFiles('/login.html', response);
+    }else if (url==="/signup") {
+      handler.serveFiles('/register.html', response);
     }else if (url==="/checkUser"&& request.method === 'POST') {
       handler.getUserDataFromDB(request,response)
     }else if (url==="/getdata") {
       handler.getDBData(response)
-    }else if (url==="/signup") {
+    }else if (url==="/adduser") {
       handler.signUp(request,response)
     }else if (type.includes(url)) {
       handler.serveFiles(url, response);

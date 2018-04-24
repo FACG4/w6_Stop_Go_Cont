@@ -1,12 +1,12 @@
-var bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
 const postData = require('./database/queries/postdata.js');
 const getData = require('./database/queries/getdata.js');
 const queryString = require('querystring');
-const check = require('check');
+const check = require('./database/queries/checksignup');
 const getUserData = require('./database/queries/check')
-
+const hashPassword = require('./hash');
+const signupToDb = require('./database/queries/signup');
 const contentType = {
   html:'text/html',
   css: 'text/css',
@@ -76,15 +76,16 @@ const getDBData = (response)=>{
 }
 
 const signUp =(request,response)=>{
-  let userInfo = '' ;
+  let userInfo = [] ;
   request.on('data',chunk =>{
     userInfo += chunk
   });
   request.on('end',()=>{
-    userInfo=JSON.parse(userInfo)
-    const username = userInfo.username ;
-    const user_password = userInfo.user_password;
-    const email = userInfo.email;
+    console.log(userInfo);
+    // userInfo=JSON.parse(userInfo)
+    const username = queryString.parse(userInfo).username ;
+    const user_password = queryString.parse(userInfo).password;
+    const email = queryString.parse(userInfo).email;
     console.log(username);
     console.log(typeof queryString.parse(userInfo));
     if(username.length<3 || username.length>30){
@@ -98,56 +99,42 @@ const signUp =(request,response)=>{
     response.end('password should not be less than 8')
   }else{
     console.log('hi');
-    check = ('user_name' ,username,(err,response)=>{
+    check('user_name' ,username,(err,result)=>{
       if(err){
-        response.end('Sorry,Unvalid email');
+        response.end('Sorry,user name has benn token');
       }
       else{
-        response.end('Done')
+        // console.log(result);
+        // response.end('result')
+        check('email' ,email,(err,result)=>{
+          if(err){
+            response.end('Sorry,this email has been signed in');
+          }
+          else{
+            // console.log(result);
+            // response.end(result)
+            hashPassword(user_password,(err,res)=>{
+              if (err) {
+              return  console.log(err);
+              }
+              let name='google'
+              signupToDb('name','user_name','password','email',(err,result)=>{
+                if (err) {
+                    throw new Error(err)
+                }
+                else {
+                  response.writeHead(302, {'location':'/'});
+                  response.end()
+                }
+              })
+              })
+          }
+        })
       }
     })
 
-    check = ('email' ,email,(err,response)=>{
-      if(err){
-        response.end('Sorry,Unvalid email');
-      }
-      else{
-        response.end('Done')
-      }
-    })
 
 
-
-
-    const hashPassword = bcrypt.hash(user_password, 8, (err, hash) => {
-        if(err){
-        return err
-      }else {
-        return hash
-      }
-//
-//         signupToDb(username ,hashedPassword,(err,res)=>{
-//           if(err){
-//             response.writeHead(500, 'Content-Type:text/html');
-//             response.end('<h1>Sorry, there was a problem adding that user</h1>');
-//           }
-//           else {
-//             response.writeHead(200, 'Content-Type:application/json');
-//             response.end()
-//           }
-//           }
-//         });
-//       }
-//
-//   });
-//
-//   });
-// };
-//
-//
-//
-
-})
 
     }
   });
