@@ -8,6 +8,7 @@ const getUserData = require('./database/queries/check')
 const hashPassword = require('./hash');
 const signupToDb = require('./database/queries/signup');
 const jwt = require('jsonwebtoken');
+const cookie = require('cookie');
 const contentType = {
   html:'text/html',
   css: 'text/css',
@@ -176,6 +177,7 @@ const getUserDataFromDB = (request,response)=>{
           // console.log(res);
 
           const userData={userName:res.name,id:res.id,role:res.role}
+          console.log(userData);
           jwt.sign(JSON.stringify(userData),process.env.JWT_KEY,(err,token)=>{
             response.writeHead(302,{'set-cookie':[`name=${res.name}`,
           `token=${token}`],
@@ -193,7 +195,21 @@ const getUserDataFromDB = (request,response)=>{
     });
 }
 
+const checkToken = ('/login',response){
+  if(request.headers.cookie){
+  const obj = cookie.parse(request.headers.cookie);
+    if(obj.token ){
+      
+    // console.log(obj);
+    response.writeHead(302,{'location':'/'})
+    response.end()
+}
+}  else{
 
+handler.serveFiles('/login.html', response);
+}
+
+}
 
 
 const logout=(request,response)=>{
