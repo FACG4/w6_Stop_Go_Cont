@@ -85,8 +85,22 @@ const getUserDataFromDB = (request,response)=>{
       console.log(email,password);
       if(email.length >0&&password.length>0){
       getUserData(email,password, (err, res) => {
-        
-          if (res.length ===0) {
+        if (err) {
+          let typeError=err.type
+          if (typeError==='database error') {
+            response.writeHead(500, 'Content-Type:text/html');
+            response.end('<h1>Sorry, something error</h1>');
+
+          }
+          else {
+            response.writeHead(500, 'Content-Type:text/html');
+            response.end('<h1>Sorry, password not match</h1>');
+          }
+        }
+
+
+
+        else if (res.length == 0) {
               response.writeHead(500, 'Content-Type:text/html');
               response.end('<h1>Sorry, user not found</h1>');
           }
