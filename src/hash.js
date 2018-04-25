@@ -8,7 +8,6 @@ const hashPassword = (password,cb) => {
       console.log(hash);
        cb(null,hash)
     }
-
   });
 };
 module.exports=hashPassword
