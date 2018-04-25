@@ -7,6 +7,7 @@ const check = require('./database/queries/checksignup');
 const getUserData = require('./database/queries/check')
 const hashPassword = require('./hash');
 const signupToDb = require('./database/queries/signup');
+const jwt = require('jsonwebtoken');
 const contentType = {
   html:'text/html',
   css: 'text/css',
@@ -172,9 +173,17 @@ const getUserDataFromDB = (request,response)=>{
               response.end('<h1>Sorry, user not found</h1>');
           }
         else {
-          console.log(res);
-          response.writeHead(302, {"location": "/"});
-          response.end('Done')
+          // console.log(res);
+
+          const userData={userName:res.name,id:res.id,role:res.role}
+          jwt.sign(JSON.stringify(userData),process.env.JWT_KEY,(err,token)=>{
+            response.writeHead(302,{'set-cookie':[`name=${res.name}`,
+          `token=${token}`],
+          'location':'/'
+            })
+        response.end()
+          })
+          // response.writeHead(302, {"location": "/"});
         }
       });
     }else{

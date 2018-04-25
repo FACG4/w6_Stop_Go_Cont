@@ -2,7 +2,7 @@ const dbConnection = require('../db_connection');
 
 const bcrypt = require('bcrypt');
 
-const getUserData = (email,password,cb)=>{
+const getUserData = (email,password1,cb)=>{
 const sql = {
   text: 'SELECT name,id,role,password FROM users WHERE email = $1',
   values:[email]
@@ -11,12 +11,12 @@ const sql = {
     if (err) return cb(err)
     console.log(res.rows[0].password,'ramy');
     let hashPassword=res.rows[0].password
-    bcrypt.compare(password, hashPassword, function(error, result) {
+    bcrypt.compare(password1, hashPassword, function(error, result) {
     if (error) {
         return cb({error,type:'database error'});
       }
       else if(result==true){
-        return cb(null,res.rows)
+        return cb(null,res.rows[0])
       }
       else {
       return cb({error,type:'password not match'});
