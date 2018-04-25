@@ -1,14 +1,3 @@
-const fetch = (method, url, cb) => {
-  let xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      let response = JSON.parse(xhr.responseText)
-      cb(response)
-    }
-  };
-  xhr.open(method, url)
-  xhr.send()
-}
 
 const selector = (text) => {
   return document.querySelector(text)
@@ -23,16 +12,56 @@ const create = (element, parent, content,classes) => {
 }
 
 const showData = (results) => {
-  results.forEach(function(item) {
+  JSON.parse(results).forEach(function(item) {
     let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
     create("li", ul,item.user_name,"user")
     create("li", ul ,item.post_content,"text")
   })
 }
 
-fetch("POST", "/getdata", (res) => {
-  showData(res);
+// const showData = (results) => {
+//   JSON.parse(results).forEach(function(item) {
+//     let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
+//     create("li", ul,item.user_name,"user")
+//     create("li", ul ,item.post_content,"text")
+//     let input=create('input',ul,null,null)
+//     input.addEventListener('keyup',(e)=>{
+//       if (e.which===13) {
+//         let array={
+//           post_id:'1',
+//           user_id:'2',
+//           comment_content:input.value
+//         }
+//         console.log(event.target.id);
+//         fetch("POST", "/addcomment",array, (res) => {
+//           // console.log(res);
+//         })
+//
+//       }
+//
+//     })
+//   })
+// }
+
+
+
+
+
+
+
+
+// var array={
+//   username:'ahmed',
+//   user_password:'123456789',
+//   email:'ramy@ramy.com'
+//
+// }
+fetch("/getdata",{
+  method:'POST'
 })
+.then(response=>( response.text()))
+.then(data=>showData(data))
+
 
 // adding form validation
 var form = document.getElementById('signup__form')
@@ -42,7 +71,7 @@ if (form) {
 
 
 form.addEventListener('submit',function(event){
-  event.preventDefault()
+  // event.preventDefault()
   var userName=document.getElementById('userName').value
   var email = document.getElementById('email').value
   var password = document.getElementById('password').value
@@ -73,14 +102,14 @@ form.addEventListener('submit',function(event){
     message.textContent='Password YOU ENTERED DO NOT MATCH'
   }
   else{
-    message.style.display='none'
-    fetch("POST","signup",(response)=>{
-      if (response) {
-        message.style.display='block'
-        message.textContent=response
-
-      }
-    })
+    // message.style.display='none'
+    // fetch("POST","signup",(response)=>{
+    //   if (response) {
+    //     message.style.display='block'
+    //     message.textContent=response
+    //
+    //   }
+    // })
   }
 })
 }
