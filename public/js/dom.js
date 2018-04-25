@@ -1,61 +1,60 @@
-
+const username=document.cookie.split('name=')[1].split(";")[0]
 const selector = (text) => {
   return document.querySelector(text)
 }
 
-const create = (element, parent, content,classes) => {
+const create = (element, parent, content,classes,id) => {
   let newElement = document.createElement(element);
   if (content)  newElement.textContent = content;
+  if(id) newElement.setAttribute("id", id)
   if (classes)  newElement.setAttribute("class", classes)
   if (parent) return parent.appendChild(newElement);
   else  return newElement
 }
 
-const showData = (results) => {
-  JSON.parse(results).forEach(function(item) {
-    let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
-    create("li", ul,item.user_name,"user")
-    create("li", ul ,item.post_content,"text")
-  })
+const showComment=(response)=>{
+JSON.parse(response).forEach(item=>{
+   create("li", document.getElementById(item.post_id),item.comment_content,"comment")
+
+})
 }
 
-// const showData = (results) => {
-//   JSON.parse(results).forEach(function(item) {
-//     let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
-//     create("li", ul,item.user_name,"user")
-//     create("li", ul ,item.post_content,"text")
-//     let input=create('input',ul,null,null)
-//     input.addEventListener('keyup',(e)=>{
-//       if (e.which===13) {
-//         let array={
-//           post_id:'1',
-//           user_id:'2',
-//           comment_content:input.value
-//         }
-//         console.log(event.target.id);
-//         fetch("POST", "/addcomment",array, (res) => {
-//           // console.log(res);
-//         })
-//
-//       }
-//
-//     })
-//   })
-// }
+
+
+const showData = (results) => {
+  JSON.parse(results).forEach(function(item) {
+    let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null,null,item.id);
+    create("li", ul,item.user_name,"user")
+    create("li", ul ,item.post_content,"text")
+    let input=create('input',ul,null,null)
+    input.addEventListener('keyup',(e)=>{
+      if (e.which===13) {
+        let array={
+          post_id:e.target.parentElement.id,
+          user_id:'2',
+          comment_content:input.value
+        }
+        fetch("/addcomment",
+        {
+          method:'POST',
+          body:JSON.stringify(array)
+        })
+        .then(response=>( window.location='/'))
 
 
 
+      }
+
+    })
+  })
+  fetch("/getcomment",{
+    method:'POST'
+  })
+  .then(response=>( response.text()))
+  .then(data=>showComment(data))
+}
 
 
-
-
-
-// var array={
-//   username:'ahmed',
-//   user_password:'123456789',
-//   email:'ramy@ramy.com'
-//
-// }
 fetch("/getdata",{
   method:'POST'
 })
@@ -77,6 +76,7 @@ form.addEventListener('submit',function(event){
   var password = document.getElementById('password').value
   var cPassword = document.getElementById('confirmPassword').value
   message.style.display='block'
+
   if (!userName || userName.length<2 || userName.length>30) {
     message.textContent='PLEASE ENTER AN User Name with (3-20 characters)'
   }
@@ -102,7 +102,11 @@ form.addEventListener('submit',function(event){
     message.textContent='Password YOU ENTERED DO NOT MATCH'
   }
   else{
-    // message.style.display='none'
+    message.style.display='none'
+
+      // window.location = response.url})
+    // .then(data=>showData(data))
+
     // fetch("POST","signup",(response)=>{
     //   if (response) {
     //     message.style.display='block'
@@ -113,3 +117,4 @@ form.addEventListener('submit',function(event){
   }
 })
 }
+console.log(document.cookie.split('name=')[1].split(";")[0]);

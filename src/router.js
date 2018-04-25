@@ -18,11 +18,16 @@ const router = (request, response) => {
       handler.getUserDataFromDB(request,response)
     }else if (url==="/getdata") {
       handler.getDBData(response)
-    }else if (url==="/adduser") {
+    }else if (url==="/adduser" && request.method === 'POST') {
       handler.signUp(request,response)
     }else if (url==="/logout") {
       handler.logout(request,response)
-    }else if (type.includes(url)) {
+    }else if (url==="/addcomment") {
+      handler.addcomment(request,response)
+    }else if (url==="/getcomment") {
+      handler.getcomment(request,response)
+    }
+    else if (type.includes(url)) {
       handler.serveFiles(url, response);
     }else {
       response.writeHead(404, 'Content-Type:text/html');

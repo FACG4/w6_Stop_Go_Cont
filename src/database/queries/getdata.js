@@ -2,7 +2,7 @@ const dbConnection = require('../db_connection');
 
 const getData = (cb)=>{
 const sql = {
-  text: `SELECT users.user_name,posts.post_content,posts.type_of_note
+  text: `SELECT users.user_name,posts.post_content,posts.type_of_note,posts.id
   FROM posts
   INNER JOIN users
   ON posts.user_id= users.id

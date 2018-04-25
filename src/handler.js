@@ -8,6 +8,8 @@ const getUserData = require('./database/queries/check')
 const hashPassword = require('./hash');
 const signupToDb = require('./database/queries/signup');
 const jwt = require('jsonwebtoken');
+const addcommentquery = require('./database/queries/addcommentq');
+const getcommentquery = require('./database/queries/getcommentquery');
 const contentType = {
   html:'text/html',
   css: 'text/css',
@@ -77,15 +79,19 @@ const getDBData = (response)=>{
 }
 
 const signUp =(request,response)=>{
+  // console.log(request.body);
   let userInfo = [] ;
   request.on('data',chunk =>{
     userInfo += chunk
   });
   request.on('end',()=>{
-    const name = queryString.parse(userInfo).name ;
-    const username = queryString.parse(userInfo).username ;
-    const password = queryString.parse(userInfo).password;
-    const email = queryString.parse(userInfo).email;
+    console.log(userInfo);
+    userInfo = JSON.parse(userInfo)
+
+     const name = 'test' ;
+    const username = userInfo.userName;
+    const password = userInfo.password;
+    const email = userInfo.email;
     if(username.length<3 || username.length>30){
       console.log(2);
       response.end('length of username must be from 3 to 8');
@@ -123,8 +129,9 @@ const signUp =(request,response)=>{
                     return (err)
                 }
                 else {
+                  console.log('all done reach end');
                   response.writeHead(302, {'location':'/'});
-                  response.end()
+                  response.end('sssss')
                 }
               })
               })
@@ -208,11 +215,59 @@ response.end()
 }
 
 
+const addcomment=(request,response)=>{
+  let alldata=[]
+  request.on('data',data=>{
+    alldata+=data
+  })
+  request.on('end',()=>{
+    alldata = JSON.parse(alldata)
+    const post_id=alldata.post_id
+    const user_id=alldata.user_id
+    const post_comment_content=alldata.comment_content
+    addcommentquery(post_id,user_id,post_comment_content,(err,result)=>{
+      if (err) {
+        response.writeHead(500, 'Content-Type:text/html');
+        response.end('<h1>Sorry, there was a problem adding that comment</h1>');
+      }
+      else {
+        response.writeHead(200, 'Content-Type:application/json');
+        response.end(JSON.stringify(result))
+
+      }
+    })
+  })
+}
+const getcomment=(request,response)=>{
+  let alldata=[]
+  request.on('data',data=>{
+    alldata+=data
+  })
+  request.on('end',()=>{
+getcommentquery((err,result)=>{
+  if (err) {
+    response.writeHead(500, 'Content-Type:text/html');
+    response.end('<h1>Sorry, there was a problem adding that comment</h1>');
+  }
+  else {
+    response.writeHead(200, 'Content-Type:application/json');
+    response.end(JSON.stringify(result))
+  }
+})
+  })
+}
+
+
+
+
+
 module.exports={
   serveFiles,
   sendDataToDB,
   getDBData,
   signUp,
   getUserDataFromDB,
-  logout
+  logout,
+  addcomment,
+  getcomment
 }
