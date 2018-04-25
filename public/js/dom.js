@@ -18,6 +18,38 @@ const showData = (results) => {
     create("li", ul ,item.post_content,"text")
   })
 }
+
+// const showData = (results) => {
+//   JSON.parse(results).forEach(function(item) {
+//     let ul = create("ul", create("div", selector("#" + item.type_of_note), null,"notes"), null);
+//     create("li", ul,item.user_name,"user")
+//     create("li", ul ,item.post_content,"text")
+//     let input=create('input',ul,null,null)
+//     input.addEventListener('keyup',(e)=>{
+//       if (e.which===13) {
+//         let array={
+//           post_id:'1',
+//           user_id:'2',
+//           comment_content:input.value
+//         }
+//         console.log(event.target.id);
+//         fetch("POST", "/addcomment",array, (res) => {
+//           // console.log(res);
+//         })
+//
+//       }
+//
+//     })
+//   })
+// }
+
+
+
+
+
+
+
+
 // var array={
 //   username:'ahmed',
 //   user_password:'123456789',

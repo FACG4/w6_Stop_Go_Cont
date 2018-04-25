@@ -117,7 +117,7 @@ const signUp =(request,response)=>{
               if (err) {
               return  console.log("err");
               }
-              signupToDb(name,username,password,email,(err,result)=>{
+              signupToDb(name,username,res,email,(err,result)=>{
                 if (err) {
                     return (err)
                 }
@@ -171,10 +171,25 @@ const getUserDataFromDB = (request,response)=>{
 }
 
 
+
+
+const logout=(request,response)=>{
+  // let cookie=request.headers.cookie
+
+response.writeHead(302,
+   { 'Set-Cookie': ['token=false; HttpOnly; Max-Age=0','logged=false;HttpOnly;Max-Age=0'],
+    'location':'/login'
+  }
+);
+response.end()
+}
+
+
 module.exports={
   serveFiles,
   sendDataToDB,
   getDBData,
   signUp,
-  getUserDataFromDB
+  getUserDataFromDB,
+  logout
 }
