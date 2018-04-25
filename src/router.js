@@ -2,7 +2,6 @@ const http = require('http');
 const fs = require('fs');
 const pg = require('pg');
 const handler = require('./handler');
-
 const type = ['/css/style.css','/js/dom.js','/favicon.ico','/js/index.js']
 
 const router = (request, response) => {
@@ -21,6 +20,8 @@ const router = (request, response) => {
       handler.getDBData(response)
     }else if (url==="/adduser") {
       handler.signUp(request,response)
+    }else if (url==="/logout") {
+      handler.logout(request,response)
     }else if (type.includes(url)) {
       handler.serveFiles(url, response);
     }else {
