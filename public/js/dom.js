@@ -1,7 +1,11 @@
-const username=document.cookie.split('name=')[1].split(";")[0]
+if (document.cookie) {
+  const username=document.cookie.split('name=')[1].split(";")[0]
+
+}
 const selector = (text) => {
   return document.querySelector(text)
 }
+
 
 const create = (element, parent, content,classes,id) => {
   let newElement = document.createElement(element);
@@ -117,4 +121,4 @@ form.addEventListener('submit',function(event){
   }
 })
 }
-console.log(document.cookie.split('name=')[1].split(";")[0]);
+// console.log(document.cookie.split('name=')[1].split(";")[0]);
