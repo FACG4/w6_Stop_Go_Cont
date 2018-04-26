@@ -8,6 +8,8 @@ const getUserData = require('./database/queries/check')
 const hashPassword = require('./hash');
 const signupToDb = require('./database/queries/signup');
 const jwt = require('jsonwebtoken');
+const addcommentquery = require('./database/queries/addcommentq');
+const getcommentquery = require('./database/queries/getcommentquery');
 const cookie = require('cookie');
 const contentType = {
   html:'text/html',
@@ -78,15 +80,19 @@ const getDBData = (response)=>{
 }
 
 const signUp =(request,response)=>{
+  // console.log(request.body);
   let userInfo = [] ;
   request.on('data',chunk =>{
     userInfo += chunk
   });
   request.on('end',()=>{
-    const name = queryString.parse(userInfo).name ;
-    const username = queryString.parse(userInfo).username ;
-    const password = queryString.parse(userInfo).password;
-    const email = queryString.parse(userInfo).email;
+    // console.log(userInfo);
+    userInfo = JSON.parse(userInfo)
+
+     const name = 'test' ;
+    const username = userInfo.userName;
+    const password = userInfo.password;
+    const email = userInfo.email;
     if(username.length<3 || username.length>30){
       console.log(2);
       response.end('length of username must be from 3 to 8');
@@ -124,8 +130,9 @@ const signUp =(request,response)=>{
                     return (err)
                 }
                 else {
+                  console.log('all done reach end');
                   response.writeHead(302, {'location':'/'});
-                  response.end()
+                  response.end('sssss')
                 }
               })
               })
@@ -148,23 +155,18 @@ const getUserDataFromDB = (request,response)=>{
       data += chunk;
   });
   request.on('end', () => {
-    console.log(data);
+    // console.log(data);
       const email = queryString.parse(data).email.trim();
       const password = queryString.parse(data).password;
-      console.log(email,password);
+      // console.log(email,password);
       if(email.length >0&&password.length>0){
       getUserData(email,password, (err, res) => {
         if (err) {
-          let typeError=err.type
-          if (typeError==='database error') {
             response.writeHead(500, 'Content-Type:text/html');
-            response.end('<h1>Sorry, something error</h1>');
+            response.end(`<h1>Sorry, ${err.type}</h1>`);
 
-          }
-          else {
-            response.writeHead(500, 'Content-Type:text/html');
-            response.end('<h1>Sorry, password not match</h1>');
-          }
+
+
         }
 
 
@@ -177,7 +179,7 @@ const getUserDataFromDB = (request,response)=>{
           // console.log(res);
 
           const userData={userName:res.name,id:res.id,role:res.role}
-          console.log(userData);
+          // console.log(userData);
           jwt.sign(JSON.stringify(userData),process.env.JWT_KEY,(err,token)=>{
             response.writeHead(302,{'set-cookie':[`name=${res.name}`,
           `token=${token}`],
@@ -195,19 +197,87 @@ const getUserDataFromDB = (request,response)=>{
     });
 }
 
-const checkToken = ('/login',response){
+const checkToken = (rout,request,response)=>{
+  console.log(1);
   if(request.headers.cookie){
-  const obj = cookie.parse(request.headers.cookie);
-    if(obj.token ){
-      
-    // console.log(obj);
-    response.writeHead(302,{'location':'/'})
-    response.end()
-}
-}  else{
+    console.log(2);
+    const cookietoken=cookie.parse(request.headers.cookie).token
+    jwt.verify(cookietoken,process.env.JWT_KEY, function(err, decoded) {
+      if (err) {
+        console.log(3);
+        console.log(err);
+          response.writeHead(501,{'Content-Type': 'text/html'})
+          response.end('<h1>Sorry,error in reading cookies</h1>');
 
-handler.serveFiles('/login.html', response);
+      }
+      else if (decoded) {
+        console.log(4);
+        console.log(decoded,"gggggg");
+        if (rout==='/login.html') {
+          console.log(5);
+          console.log('we have cookies and the rout is ',rout);
+          response.writeHead(302,{'location':'/'})
+          response.end()
+        }
+        else if(rout==='/index.html'){
+          console.log(6);
+          console.log('we have cookies and the rout is ',rout);
+          serveFiles('/index.html', response);
+        }
+
+      }
+
+// err
+// decoded undefined
+});
+
+
+
+  //  if(rout==='/index.html'){
+  //    console.log(7);
+  //   console.log('we have cookies and the rout is ',rout);
+  //   response.writeHead(302,{'location':'/login'})
+  //   response.end()
+  // }
+  // else{
+  //   console.log(8);
+  //   serveFiles('/login.html', response);
+  //
+  // }
+}else if(rout==='/login.html'){
+console.log(9);
+  serveFiles('/login.html', response);
 }
+else {
+  console.log(10);
+  response.writeHead(302,{'location':'/login'})
+  response.end()
+
+}
+
+//
+//   console.log('hi');
+//   if(request.headers.cookie){
+//     console.log(request.headers.cookie);
+//   const obj = cookie.parse(request.headers.cookie);
+//   // console.log(obj);
+//     if(obj.token&&rout!= '/login.html'){
+//
+//       serveFiles('/index.html', response);
+//
+//       // serveFiles(rout, response);
+//     // console.log(obj);
+//     // response.writeHead(302,{'location':'/'})
+//     // response.end()
+// }
+// }  else if(rout==='/login.html'){
+//   serveFiles('/login.html', response);
+// }else{
+//   response.writeHead(302,{'location':'/login'})
+//   response.end()
+//
+// }
+
 
 }
 
@@ -216,12 +286,58 @@ const logout=(request,response)=>{
   // let cookie=request.headers.cookie
 
 response.writeHead(302,
-   { 'Set-Cookie': ['token=false; HttpOnly; Max-Age=0','logged=false;HttpOnly;Max-Age=0'],
+   { 'Set-Cookie': ['token=false; HttpOnly; Max-Age=0','name=false;HttpOnly;Max-Age=0'],
     'location':'/login'
   }
 );
 response.end()
 }
+
+
+const addcomment=(request,response)=>{
+  let alldata=[]
+  request.on('data',data=>{
+    alldata+=data
+  })
+  request.on('end',()=>{
+    alldata = JSON.parse(alldata)
+    const post_id=alldata.post_id
+    const user_id=alldata.user_id
+    const post_comment_content=alldata.comment_content
+    addcommentquery(post_id,user_id,post_comment_content,(err,result)=>{
+      if (err) {
+        response.writeHead(500, 'Content-Type:text/html');
+        response.end('<h1>Sorry, there was a problem adding that comment</h1>');
+      }
+      else {
+        response.writeHead(200, 'Content-Type:application/json');
+        response.end(JSON.stringify(result))
+
+      }
+    })
+  })
+}
+const getcomment=(request,response)=>{
+  let alldata=[]
+  request.on('data',data=>{
+    alldata+=data
+  })
+  request.on('end',()=>{
+getcommentquery((err,result)=>{
+  if (err) {
+    response.writeHead(500, 'Content-Type:text/html');
+    response.end('<h1>Sorry, there was a problem adding that comment</h1>');
+  }
+  else {
+    response.writeHead(200, 'Content-Type:application/json');
+    response.end(JSON.stringify(result))
+  }
+})
+  })
+}
+
+
+
 
 
 module.exports={
@@ -230,5 +346,8 @@ module.exports={
   getDBData,
   signUp,
   getUserDataFromDB,
-  logout
+  logout,
+  addcomment,
+  getcomment,
+  checkToken
 }
