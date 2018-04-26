@@ -26,9 +26,9 @@ CREATE TABLE comments (
 
 INSERT INTO users (name,user_name,password,role,email)
 VALUES ('MARWA','MARWA','$2b$08$J942/cvn3waPhENFwIX0Du2Z4Nwx0sAaSGAIqeDTysyVCbg6puNma',DEFAULT,'ma@mail.com'),
-        ('MOHAMMED','MOHAMMED','123456',DEFAULT, 'mo@email.com'),
-        ('ISHAK','ISHAK','123456',DEFAULT,'i@mail.com'),
-        ('RAMY','RAMY','123456',DEFAULT,'r@mail.com');
+        ('MOHAMMED','MOHAMMED','$2b$08$J942/cvn3waPhENFwIX0Du2Z4Nwx0sAaSGAIqeDTysyVCbg6puNma',DEFAULT, 'mo@email.com'),
+        ('ISHAK','ISHAK','$2b$08$J942/cvn3waPhENFwIX0Du2Z4Nwx0sAaSGAIqeDTysyVCbg6puNma',DEFAULT,'i@mail.com'),
+        ('RAMY','RAMY','$2b$08$J942/cvn3waPhENFwIX0Du2Z4Nwx0sAaSGAIqeDTysyVCbg6puNma',DEFAULT,'r@mail.com');
 
 INSERT INTO posts (user_id,post_content,type_of_note)
 VALUES (1,'stop stop stop','STOP'),
