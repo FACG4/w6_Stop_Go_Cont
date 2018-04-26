@@ -154,3 +154,6 @@ select, button {
   color: red;
   text-transform: uppercase;
 }
+#disabled{
+  display: none;
+}

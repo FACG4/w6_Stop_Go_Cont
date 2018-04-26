@@ -11,6 +11,7 @@
 
 </head>
 <body>
+  <a href="/logout"><button type="button" name="button">logout</button></a>
   <h1>Stop Go Cont Facg 4</h1>
   <form class="form" action="/create-post" method="post">
 
@@ -20,15 +21,8 @@
 
 
     <textarea name="post"  placeholder="add your post here..." required></textarea>
+  <input type="text" name="users" value="" style='display:none' id="disabled">
 
-    <label for=""></label>
-    <select class="userSelect" name="users">
-
-      <option value="1">MARWA</option>
-      <option value="2">MOHAMMED</option>
-      <option value="3">ISHAK</option>
-      <option value="4">RAMY</option>
-    </select>
 
     <select class="postType" name="postType">
       <option value="STOP">Stop</option>

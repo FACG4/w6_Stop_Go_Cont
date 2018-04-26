@@ -1,6 +1,7 @@
+let username='';
 if (document.cookie) {
-  const username=document.cookie.split('name=')[1].split(";")[0]
-
+  let username=document.cookie.split('name=')[1].split(";")[0]
+  let user=document.getElementById('disabled').value=username
 }
 const selector = (text) => {
   return document.querySelector(text)

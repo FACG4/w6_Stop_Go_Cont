@@ -28,7 +28,7 @@ const serveFiles = (endpoint, response)=>{
     if (error) {
         response.writeHead(500, 'Content-Type:text/html');
         response.end('<h1>Sorry, there was a problem loading the homepage</h1>');
-        console.log(error);
+
     }
     response.writeHead(200,{'Content-Type':`${contentType[fileExtention]}`});
     response.end(file);
@@ -86,40 +86,36 @@ const signUp =(request,response)=>{
     userInfo += chunk
   });
   request.on('end',()=>{
-    // console.log(userInfo);
-    userInfo = JSON.parse(userInfo)
+    userInfo = queryString.parse(userInfo)
+
 
      const name = 'test' ;
-    const username = userInfo.userName;
+    const username = userInfo.username;
     const password = userInfo.password;
     const email = userInfo.email;
     if(username.length<3 || username.length>30){
-      console.log(2);
+
       response.end('length of username must be from 3 to 8');
     }else if(username ===''){
-      console.log(1);
+
       response.end('you must enter your name');
     }else if(password.length<8){
-      console.log(3);
+
     response.end('password should not be less than 8')
   }else{
-    console.log('ِAll Is Ok');
+
     check('user_name' ,username,(err,result)=>{
       if(err){
         response.end('Sorry,user name has benn token');
       }
       else{
-        console.log('user check is ok');
-        // console.log(result);
-        // response.end('result')
+
         check('email' ,email,(err,result)=>{
           if(err){
             response.end('Sorry,this email has been signed in');
           }
           else{
-            // console.log(result);
-            // response.end(result)
-            console.log('email check is ok');
+
 
             hashPassword(password,(err,res)=>{
               if (err) {
@@ -130,7 +126,7 @@ const signUp =(request,response)=>{
                     return (err)
                 }
                 else {
-                  console.log('all done reach end');
+
                   response.writeHead(302, {'location':'/'});
                   response.end('sssss')
                 }
@@ -181,7 +177,7 @@ const getUserDataFromDB = (request,response)=>{
           const userData={userName:res.name,id:res.id,role:res.role}
           // console.log(userData);
           jwt.sign(JSON.stringify(userData),process.env.JWT_KEY,(err,token)=>{
-            response.writeHead(302,{'set-cookie':[`name=${res.name}`,
+            response.writeHead(302,{'set-cookie':[`name=${res.id}`,
           `token=${token}`],
           'location':'/'
             })
@@ -198,20 +194,19 @@ const getUserDataFromDB = (request,response)=>{
 }
 
 const checkToken = (rout,request,response)=>{
-  console.log(1);
+
   if(request.headers.cookie){
-    console.log(2);
+
     const cookietoken=cookie.parse(request.headers.cookie).token
     jwt.verify(cookietoken,process.env.JWT_KEY, function(err, decoded) {
       if (err) {
-        console.log(3);
-        console.log(err);
+
           response.writeHead(501,{'Content-Type': 'text/html'})
           response.end('<h1>Sorry,error in reading cookies</h1>');
 
       }
       else if (decoded) {
-        console.log(4);
+      
         console.log(decoded,"gggggg");
         if (rout==='/login.html') {
           console.log(5);
@@ -295,10 +290,12 @@ response.end()
 
 
 const addcomment=(request,response)=>{
+
   let alldata=[]
   request.on('data',data=>{
     alldata+=data
   })
+
   request.on('end',()=>{
     alldata = JSON.parse(alldata)
     const post_id=alldata.post_id
